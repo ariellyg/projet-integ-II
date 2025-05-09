@@ -1,0 +1,29 @@
+-Arquivo 1:
+O arquivo recipes.csv contém informações sobre mais de 100.000 receitas, incluindo nomes de receitas, tempos de preparação, tempos de cozimento, classificações, listas de ingredientes e instruções passo a passo
+
+recipe_name: O nome da receita. (Cadeia de caracteres)
+recipe_name: O nome da receita. (Cadeia de caracteres)
+prep_time: A quantidade de tempo necessária para preparar a receita. (Inteiro)
+cook_time: A quantidade de tempo necessária para cozinhar a receita. (Inteiro)
+total_time: O tempo total necessário para preparar e cozinhar a receita. (Inteiro)
+porções: O número de porções que a receita produz. (Inteiro)
+porções: O número de porções que a receita produz. (Inteiro)
+ingredientes: Uma lista de ingredientes necessários para fazer a receita. (Lista)
+instruções: Uma lista de instruções para preparar e cozinhar a receita. (Lista)
+rating: A classificação da receita. (Flutuador)
+url: A URL da receita. (Cadeia de caracteres)
+cuisine_path: O caminho da culinária de receitas. (Cadeia de caracteres)
+nutrição: A receita de informações nutricionais. (Dicionário)
+timing: as informações de tempo da receita. (Dicionário)
+-Arquivo 2:
+O arquivo test_recipes.csv contém uma lista de receitas, seus tempos de preparação, tempos de cozimento, tempos totais, porções, rendimentos, ingredientes e instruções
+
+url: A URL da receita. (Cadeia de caracteres)
+Nome: o nome da receita. (Cadeia de caracteres)
+Tempo de preparação: O tempo de preparação da receita. (Cadeia de caracteres)
+Tempo de cozimento: O tempo de cozimento da receita. (Cadeia de caracteres)
+Tempo total: O tempo total da receita. (Cadeia de caracteres)
+Porções: As porções da receita. (Cadeia de caracteres)
+Rendimento: O rendimento da receita. (Cadeia de caracteres)
+Ingredientes: Os ingredientes da receita. (Cadeia de caracteres)
+Instruções: As instruções da receita. (Cadeia de caracteres)
