@@ -1,0 +1,15 @@
+# Modelos e embeddings
+sentence-transformers==2.6.1
+transformers==4.40.0
+torch>=2.0.0
+
+# Indexação vetorial
+faiss-cpu==1.8.0
+
+# Leitura e manipulação de dados
+pandas==2.2.2
+numpy==1.26.4
+
+langchain==0.1.14
+langchain-community==0.0.32
+
