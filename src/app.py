@@ -32,6 +32,8 @@ if st.button("Gerar Receita"):
                 for i, passo in enumerate(receita["Modo de preparo"], 1):
                     st.markdown(f"**{i}.** {passo}")
 
+                st.subheader(f"⏱️ Tempo de preparo: {receita['Tempo de preparo']}")
+
                 # Exibe também o JSON bruto se o usuário quiser
                 with st.expander("📦 Ver JSON"):
                     st.json(receita)

@@ -38,11 +38,12 @@ Retorne a receita **exclusivamente** no seguinte formato **JSON**, com as chaves
   "Modo de preparo": [
     "...",
     "..."
-  ]
+  ],
+  "Tempo de preparo": "..."
 }
 
 ## Ingredientes fornecidos:
 Para os seguintes ingredientes:
  {{ingredientes}}
-Gere uma receita coerente e bem explicada com base nesses itens.
+Gere uma receita coerente e bem explicada, e com uma estimativa do tempo de preparo, com base nesses itens.
 

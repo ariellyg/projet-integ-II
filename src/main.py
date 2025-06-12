@@ -25,7 +25,7 @@ def extrair_json_fallback(texto: str) -> dict:
 
 # 3. Valida se o JSON contém os campos esperados
 def validar_campos_esperados(receita: dict) -> bool:
-    campos = {"Descrição", "Ingredientes", "Modo de preparo"}
+    campos = {"Descrição", "Ingredientes", "Modo de preparo", "Tempo de preparo"}
     return isinstance(receita, dict) and campos.issubset(set(receita.keys()))
 
 # 4. Gera a receita com Groq e aplica fallback e validação
