@@ -43,7 +43,10 @@ Retorne **exclusivamente** no seguinte formato **JSON**, com as seguintes chaves
   "Tempo de preparo": "Duração total aproximada da receita"
 }
 
-## Ingredientes fornecidos:
+### Receitas encontradas na web:
+{{resultados_web}}
+
+### Ingredientes fornecidos:
 Para os seguintes ingredientes:
  [{{ingredientes}}]
 Gere uma receita nordestina coerente e bem explicada, e com uma estimativa do tempo de preparo, com base nesses itens.
