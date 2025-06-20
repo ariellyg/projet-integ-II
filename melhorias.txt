@@ -1,0 +1,8 @@
+Decidir se ele consegue separar ingredientes principais e os condimentos.
+
+Ver se tem como separar, se não, deixar a opção pra pessoa colocar o que ela tem em casa: 
+
+"Você quer adicionar tal coisa!"
+
+
+--> Pode ser que usando structured outputs seja possível

@@ -1,8 +1,10 @@
 from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.output_parsers import PydanticOutputParser, JsonOutputParser
 from langchain_core.runnables import RunnableLambda, RunnableSequence
 from dotenv import load_dotenv
+from structured_outputs.structured_outputs import Receita
+from pydantic import ValidationError
 import json
 import re
 
@@ -16,6 +18,12 @@ def carregar_prompt(caminho: str) -> str:
 # 2. Tenta extrair o primeiro JSON válido de um texto bruto
 def extrair_json_fallback(texto: str) -> dict:
     try:
+        # Remove blocos de markdown (```json ... ```)
+        if "```json" in texto:
+            texto = texto.split("```json")[1].split("```")[0].strip()
+        elif "```" in texto:
+            texto = texto.split("```")[1].strip()
+
         match = re.search(r'{.*}', texto, re.DOTALL)
         if match:
             return json.loads(match.group())
@@ -30,15 +38,15 @@ def validar_campos_esperados(receita: dict) -> bool:
 
 # 4. Gera a receita com Groq e aplica fallback e validação
 def gerar_receita_com_groq_json(ingredientes: str, prompt_base: str) -> dict:
-    # Formata o prompt
+    # Substitui no prompt o campo {{ingredientes}}
     prompt_formatado = prompt_base.replace("{{ingredientes}}", ingredientes)
     prompt_formatado += "\n\nPor favor, responda apenas no formato JSON válido."
 
     # Inicializa modelo e parser
     llm = ChatGroq(model="gemma2-9b-it", temperature=0.7, max_retries=2)
-    parser = JsonOutputParser()
+    parser = JsonOutputParser(pydantic_object=Receita)
 
-    # Define a cadeia de execução
+    # Cadeia com prompt direto
     chain = (
         RunnableLambda(lambda _: prompt_formatado)
         | llm
@@ -46,21 +54,27 @@ def gerar_receita_com_groq_json(ingredientes: str, prompt_base: str) -> dict:
     )
 
     try:
-        resultado = chain.invoke({})
-        if validar_campos_esperados(resultado):
-            return resultado
-        else:
-            raise ValueError("JSON não contém os campos esperados.")
+        resultado: Receita = chain.invoke({})
+        return resultado
+    except ValidationError as ve:
+        print("⚠️ A resposta não pôde ser validada com Pydantic. Tentando fallback...")
     except Exception as e:
-        print("⚠️ Falha na análise direta como JSON. Tentando fallback...")
-        # fallback: executa modelo bruto e tenta regex manual
-        resposta_bruta = llm.invoke(prompt_formatado)
-        receita_fallback = extrair_json_fallback(resposta_bruta)
-        if receita_fallback and validar_campos_esperados(receita_fallback):
-            print("✅ Fallback foi bem-sucedido.")
-            return receita_fallback
-        else:
-            raise RuntimeError("Falha completa ao obter JSON válido.")
+        print(f"⚠️ Falha geral na análise direta com LangChain: {e}. Tentando fallback...")
+
+    # fallback manual
+    resposta_bruta = llm.invoke(prompt_formatado)
+    receita_fallback_dict = extrair_json_fallback(resposta_bruta.content)
+    
+    if receita_fallback_dict:
+        try:
+            receita_pydantic = Receita(**receita_fallback_dict)
+            print("✅ Fallback foi bem-sucedido com Pydantic.")
+            return receita_pydantic.model_dump()
+        except ValidationError as ve:
+            print("❌ Fallback falhou ao validar com Pydantic.")
+            raise RuntimeError(f"Erro de validação: {ve}")
+    else:
+        raise RuntimeError("❌ Falha completa ao obter JSON válido.")
 
 # 5. Execução principal
 if __name__ == "__main__":
