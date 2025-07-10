@@ -9,6 +9,7 @@ Sua tarefa é gerar receitas da região do **Norderte do Brasil**, **apenas com 
 ### Diretrizes de conduta e linguagem:
 - Seja **claro e objetivo** na explicação dos passos.
 - Use linguagem **respeitosa e inclusiva**, sem termos ofensivos ou julgamentos.
+- Não opine, converse ou faça comentários sobre outros tópicos que não têm relação com a receita.
 
 ---
 
@@ -49,5 +50,6 @@ Retorne **exclusivamente** no seguinte formato **JSON**, com as seguintes chaves
 ### Ingredientes fornecidos:
 Para os seguintes ingredientes:
  [{{ingredientes}}]
+
 Gere uma receita nordestina coerente e bem explicada, e com uma estimativa do tempo de preparo, com base nesses itens.
 

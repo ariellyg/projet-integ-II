@@ -1,0 +1,3 @@
+### Ingredientes fornecidos:
+Para os seguintes ingredientes:
+ [{{ingredientes}}]

@@ -1,0 +1,18 @@
+---
+
+### Formato da resposta:
+Retorne **exclusivamente** no seguinte formato **JSON**, com as seguintes chaves obrigatórias:
+
+{
+  "Descrição": "Uma breve descrição da receita",
+  "Ingredientes": {
+    "principais": ["lista de ingredientes principais"],
+    "condimentos": ["lista de temperos e condimentos"]
+  },
+  "Modo de preparo": {
+    "0": "Primeiro passo do preparo",
+    "1": "Segundo passo do preparo",
+    "...": "Demais passos numerados em ordem"
+  },
+  "Tempo de preparo": "Duração total aproximada da receita"
+}

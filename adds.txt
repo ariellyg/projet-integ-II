@@ -1,0 +1,5 @@
+LangGraph supports robust human-in-the-loop (HIL) workflows, enabling human intervention at any point in an automated process. This is especially useful in large language model (LLM)-driven applications where model output may require validation, correction, or additional context.
+
+https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop/
+
+-> Adicionamos human-in-the-loop, ou seja, o usuário poderá aprovar ou rejeitar a receita.

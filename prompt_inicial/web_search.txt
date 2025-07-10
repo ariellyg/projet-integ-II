@@ -1,0 +1,2 @@
+### Receitas encontradas na web:
+{{resultados_web}}

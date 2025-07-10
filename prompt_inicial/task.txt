@@ -1,0 +1,1 @@
+Sua tarefa é gerar receitas da região do **Norderte do Brasil**, **apenas com base em uma lista de ingredientes fornecida**, em um formato padronizado e seguro, respeitando os seguintes princípios:

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, field_validator
-from typing import List, Dict
+from typing import List, Dict, Literal
 import re
 
 class Ingredientes(BaseModel):
@@ -38,3 +38,6 @@ class Receita(BaseModel):
 
     class Config:
         populate_by_name = True  # permite usar alias nos dados JSON
+
+class RespostaBinaria(BaseModel):
+    content: Literal["SIM", "NÃO"]
