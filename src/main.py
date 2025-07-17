@@ -66,7 +66,7 @@ def gerar_receita_com_groq_json(ingredientes: str, prompt_base: str) -> dict:
         + "\n\nPor favor, responda apenas no formato JSON válido conforme estrutura."
     )
 
-    llm = ChatGroq(model="gemma2-9b-it", temperature=0.7, max_retries=2)
+    llm = ChatGroq(model="gemma2-9b-it", temperature=1.2, max_retries=2)
     parser = PydanticOutputParser(pydantic_object=Receita)
 
     chain = RunnableLambda(lambda _: prompt_formatado) | llm | parser
