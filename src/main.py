@@ -32,9 +32,12 @@ def extrair_json_fallback(texto: str) -> dict:
     return None
 
 # 3. Busca na web receitas com ingredientes dados
-def buscar_receitas_na_web(ingredientes: str, k: int = 3) -> str:
+def buscar_receitas_na_web(ingredientes: str, estado:str, k: int = 3) -> str:
     search = TavilySearchResults(max_results=k)
-    resultados = search.run(f"Receitas do Nordeste do Brasil **apenas** com os ingredientes: {ingredientes}")
+    if estado:
+        resultados = search.run(f"Receitas do Nordeste do Brasil (focado em {estado}) **apenas** com os ingredientes: {ingredientes}")
+    else:
+        resultados = search.run(f"Receitas do Nordeste do Brasil **apenas** com os ingredientes: {ingredientes}")
 
     if not resultados:
         return "Nenhum resultado encontrado."
@@ -57,11 +60,11 @@ def buscar_receitas_na_web(ingredientes: str, k: int = 3) -> str:
 
 # 4. Gera a receita com integração com web + Pydantic fallback robusto
 def gerar_receita_com_groq_json(ingredientes: str, prompt_base: str) -> dict:
-    web_results = buscar_receitas_na_web(ingredientes)
+    # web_results = buscar_receitas_na_web(ingredientes, estado)
 
     prompt_formatado = (
         prompt_base
-        .replace("{{resultados_web}}", web_results)
+        # .replace("{{resultados_web}}", web_results)
         .replace("{{ingredientes}}", ingredientes)
         + "\n\nPor favor, responda apenas no formato JSON válido conforme estrutura."
     )

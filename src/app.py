@@ -13,6 +13,7 @@ A IA irá gerar uma receita segura e clara com base no que você tem em casa!
 ingredientes_input = st.text_input("🧺 Ingredientes (ex: arroz, cenoura, frango)", "")
 ingredientes_lista = [i.strip() for i in ingredientes_input.split(",") if i.strip()]
 qtd_ingredientes = len(ingredientes_lista)
+st.session_state["ingredientes_originais"] = ingredientes_lista
 
 estados = ["", "Maranhão",  "Piauí", "Ceará", "Rio Grande do Norte", "Paraíba",
             "Pernambuco", "Alagoas",  "Sergipe", "Bahia"]
@@ -52,7 +53,7 @@ if st.button("Gerar Receita"):
 
                 # Busca na web uma única vez
                 if st.session_state.resultados_web is None:
-                    st.session_state.resultados_web = buscar_receitas_na_web(ingredientes_formatados)
+                    st.session_state.resultados_web = buscar_receitas_na_web(ingredientes_formatados, estado_escolhido)
 
                 receita = gerar_receita_com_groq_json(
                     ingredientes_formatados,
@@ -104,3 +105,37 @@ if st.session_state.receitas:
                 st.session_state.receitas.append(nova_receita)
             except Exception as e:
                 st.error(f"❌ Erro ao gerar nova receita: {str(e)}")
+
+st.subheader("🔁 Trocar Ingrediente")
+
+ingrediente_para_trocar = st.selectbox(
+    "Escolha um ingrediente para substituir:",
+    st.session_state["ingredientes_originais"]
+)
+
+novo_ingrediente = st.text_input("Digite o novo ingrediente que deseja usar:")
+
+if st.button("♻️ Substituir ingrediente e gerar nova receita"):
+    nova_lista = [
+        novo_ingrediente if ing == ingrediente_para_trocar else ing
+        for ing in st.session_state["ingredientes_originais"]
+    ]
+
+    with st.spinner("Gerando nova receita com ingrediente substituído..."):
+        try:
+            prompt_base = carregar_prompt("prompt.txt")
+
+            if estado_escolhido:
+                prompt_base += f"\n\nCrie uma nova receita típica ou criativa do estado {estado_escolhido}."
+
+            ingredientes_novos = ", ".join(nova_lista)
+            nova_receita = gerar_receita_com_groq_json(
+                ingredientes_novos,
+                prompt_base.replace("{{resultados_web}}", st.session_state.resultados_web)
+            )
+
+            st.session_state.receitas.append(nova_receita)
+            st.session_state["ingredientes_originais"] = nova_lista
+
+        except Exception as e:
+            st.error(f"❌ Erro ao gerar nova receita com ingrediente substituído: {str(e)}")
