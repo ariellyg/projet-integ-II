@@ -14,7 +14,8 @@ Além disso, o sistema conta com uma interface simplificada construída com **St
 ## ⚙️ Requisitos
 
 - Python 3.11+
-- Groq API Key (opcional, se quiser usar a API real)
+- Groq API Key
+- TavilySearch API Key
 - Dependências listadas em `requirements.txt`
 
 ---
